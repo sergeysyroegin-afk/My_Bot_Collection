@@ -1,0 +1,79 @@
+body {
+    font-family: sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+}
+
+.profile {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover; /* Чтобы аватар не растягивался */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 5px; /* Меньший отступ */
+}
+
+.description {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 15px; /* Отступ перед списком ботов */
+}
+
+p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.bot-list {
+    margin-top: 20px; /* Убран дубликат margin-top */
+}
+
+.bot-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.bot-item h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.bot-item a {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #0088cc;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.bot-item a:hover {
+    background-color: #0077b3;
+}
