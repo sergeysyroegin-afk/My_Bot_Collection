@@ -1,3 +1,4 @@
+/* Общие стили */
 body {
     font-family: sans-serif;
     background-color: #f0f0f0;
@@ -7,6 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    position: relative; /* Необходимо для позиционирования контейнера */
 }
 
 .container {
@@ -16,11 +18,41 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 80%;
     max-width: 600px;
+    position: relative; /* Делаем container позиционированным предком */
 }
 
-.profile {
+/* Стили для выбора языка */
+.language-select-container {
+    position: absolute;
+    top: 10px; /* Отступ сверху от контейнера */
+    right: 10px; /* Отступ справа от контейнера */
+    z-index: 100; /* Убедимся, что он поверх другого контента */
+}
+
+.language-select {
+    padding: 5px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex; /* Используем flex для выравнивания label и select */
+    align-items: center; /* Выравниваем по центру по вертикали */
+}
+
+.language-select label {
+    margin-right: 5px;
+}
+
+.language-select select {
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+/* Стили для профиля */
+.profile-wrapper {
     text-align: center;
     margin-bottom: 20px;
+    position: relative; /* Для возможного позиционирования других элементов внутри */
 }
 
 .avatar {
@@ -28,28 +60,24 @@ body {
     height: 100px;
     border-radius: 50%;
     margin-bottom: 10px;
-    object-fit: cover; /* Чтобы аватар не растягивался */
+    object-fit: cover;
 }
 
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 5px; /* Меньший отступ */
+    margin-bottom: 5px;
 }
 
 .description {
     color: #666;
     font-style: italic;
-    margin-bottom: 15px; /* Отступ перед списком ботов */
+    margin-bottom: 15px;
 }
 
-p {
-    color: #666;
-    line-height: 1.6;
-}
-
+/* Стили для списка ботов */
 .bot-list {
-    margin-top: 20px; /* Убран дубликат margin-top */
+    margin-top: 20px;
 }
 
 .bot-item {
@@ -57,14 +85,41 @@ p {
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 5px;
+    display: flex; /* Включаем Flexbox для блока bot-item */
+    align-items: center; /* Выравниваем элементы по вертикали */
+    flex-wrap: wrap; /* Позволяет переноситься на новую строку на малых экранах */
 }
 
-.bot-item h2 {
+.bot-item-screenshot {
+    width: 33.33%; /* Занимает 1/3 ширины */
+    padding-right: 10px; /* Добавляем небольшой отступ справа */
+    box-sizing: border-box; /* Чтобы padding не увеличивал общую ширину элемента */
+}
+
+.bot-item-screenshot img {
+    max-width: 100%;   /* Чтобы изображение не выходило за пределы контейнера */
+    height: auto;      /* Сохраняем пропорции изображения */
+    display: block;    /* Убираем лишние отступы снизу */
+    border-radius: 4px; /* Небольшое скругление для скриншота */
+}
+
+.bot-item-description {
+    width: calc(66.66% - 10px); /* Занимает 2/3 ширины минус padding-right */
+    box-sizing: border-box; /* Чтобы padding не увеличивал общую ширину элемента */
+}
+
+.bot-item-description h2 {
     margin-top: 0;
     color: #333;
 }
 
-.bot-item a {
+.bot-item-description p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 10px; /* Уменьшим отступ для лучшего вида */
+}
+
+.bot-item-description a {
     display: inline-block;
     padding: 8px 16px;
     background-color: #0088cc;
@@ -74,6 +129,42 @@ p {
     transition: background-color 0.3s;
 }
 
-.bot-item a:hover {
+.bot-item-description a:hover {
     background-color: #0077b3;
+}
+
+/* Стиль для GIF анимации */
+.bot-animation {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    /*border-radius: 4px;  Небольшое скругление */
+	width: 100px;
+}
+
+/* Медиа-запрос для адаптивности на малых экранах */
+@media (max-width: 768px) {
+    .bot-item {
+        flex-direction: column; /* Переносим элементы друг под друга */
+    }
+
+    .bot-item-screenshot,
+    .bot-item-description {
+        width: 100%; /* Занимаем всю ширину */
+        padding-right: 0; /* Убираем правый отступ */
+        margin-bottom: 15px; /* Добавляем отступ снизу */
+    }
+
+    .bot-item-screenshot img {
+        width: auto; /* Автоматическая ширина */
+        margin: 0 auto; /* Центрируем изображение */
+    }
+
+    .language-select-container {
+        top: 5px; /* Немного уменьшим отступ сверху на малых экранах */
+        right: 5px;
+    }
 }
