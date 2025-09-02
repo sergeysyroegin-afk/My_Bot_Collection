@@ -1,90 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <title>portfolio_УТ</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Портфолио — Сергей Вельский</title>
+    <meta name="description" content="Портфолио Python-разработчика, создателя Telegram-ботов и AI-проектов">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
-<body>
+<body class="light-theme">
     <div class="container">
-        <div class="language-select-container"> <!-- Новый контейнер для выбора языка -->
-            <div class="language-select">
-                <label for="language">🌍:</label>
-                <select id="language" onchange="changeLanguage()">
-                    <option value="index.html">Ру</option>
-                    <option value="index_en.html" selected>En</option>
-                </select>
-            </div>
-        </div>
 
-        <div class="profile-wrapper"> <!-- Обертка для аватара и описания -->
-			
-            <img src="assets/your-avatar.jpg" alt="Ваш аватар" class="avatar">
+		<!-- Панель настроек — язык и тема -->
+		<div class="settings-panel">
+		  <div class="language-select">
+			<label for="language">🌍</label>
+			<select id="language" aria-label="Выберите язык">
+			  <option value="index.html" selected>Ру</option>
+			  <option value="index_en.html">En</option>
+			</select>
+		  </div>
+
+		  <button id="theme-toggle" class="theme-toggle-btn">Тёмная тема</button>
+		</div>
+        
+        <!-- Профиль -->
+        <div class="profile-wrapper" id="profile">
+            <img src="assets/your-avatar.jpg" alt="Аватар Сергея Вельского" class="avatar" loading="lazy">
             <h1>Sergey</h1>
             <p class="description">"Python Developer | Telegram Bot Creator | AI Enthusiast"</p>
         </div>
- 
+
+        <!-- Список ботов -->
         <div class="bot-list">
-			<div class="bot-item">
-				<div class="bot-item-screenshot">
-					<img src="assets/The_AI_Art_Anarchy.png" alt="Скриншот The_AI_Art_Anarchy">
-				</div>
-				<div class="bot-item-description">
-					<h2>📜The AI Art Anarchy</h2>
-					<p>A daily dose of inspiration from Artificial Intelligence! Multiple times a day, neural networks generate unique artworks based on an analysis of current trending prompts. The AI itself chooses the time, crafts the prompt, and creates the image. Subscribe and dive into the world of machine creativity!<br> 
-					The channel is managed by an autonomous bot.👻</p>
-					<a href="https://t.me/The_AI_Art_Anarchy" target="_blank">👉 Go to channel</a>
-				</div>
-			</div>
+            <article class="bot-item" id="bot1">
+                <div class="bot-item-screenshot">
+                    <img src="assets/The_AI_Art_Anarchy.png" alt="Пример арта из канала The AI Art Anarchy" loading="lazy">
+                </div>
+                <div class="bot-item-description">
+                    <h2>📜 The AI Art Anarchy</h2>
+                    <p>A daily dose of inspiration from Artificial Intelligence! Multiple times a day, neural networks generate unique artworks based on an analysis of current trending prompts. The AI itself chooses the time, crafts the prompt, and creates the image. Subscribe and dive into the world of machine creativity!<br> 
+					<br><i>The channel is managed by an autonomous bot.</i>👻</p>
+                    <a href="https://t.me/The_AI_Art_Anarchy" target="_blank" rel="noopener" aria-label="Go to channel The AI Art Anarchy">👉 Go to channel</a>
+                </div>
+            </article>
 
-			<div class="bot-item">
-				<div class="bot-item-screenshot">
-					<img src="assets/Fanny_art.png" alt="Скриншот The_AI_Art_Anarchy">
-				</div>
-				<div class="bot-item-description">
-					<h2>📜Funny art images</h2>
-					<p> Random themes meet AI curation! Each day, this channel generates a new theme and finds the perfect images to match. Get inspired daily!<br><br></p>
-					<a href="https://t.me/Fanny_art" target="_blank">👉 Go to channel</a>
-				</div>
-			</div>
+            <article class="bot-item" id="bot2">
+                <div class="bot-item-screenshot">
+                    <img src="assets/Fanny_art.png" alt="Пример арта из канала Funny art images" loading="lazy">
+                </div>
+                <div class="bot-item-description">
+                    <h2>📜 Funny art images</h2>
+                    <p> Random themes meet AI curation! Each day, this channel generates a new theme and finds the perfect images to match. Get inspired daily!<br><br></p>
+					  <a href="https://t.me/Fanny_art" target="_blank" rel="noopener" aria-label="👉 Go to channel Funny art images">👉 Go to channel</a>
+                </div>
+            </article>
 
-			<div class="bot-item">
-					<div class="bot-item-screenshot">
-						<img src="assets/python_art.png" alt="Скриншот Python_Git">
-					</div>
-					<div class="bot-item-description">
-						<h2>📜Python Git</h2>
-						<!-- <br><br> -->
-					   <p>Small Python projects with code explanations — an evolving collection for learning and inspiration.</p>
-						<a href="https://t.me/python_Git" target="_blank">👉 Go to channel</a>
-					</div>
-			</div>
+            <article class="bot-item" id="bot3">
+                <div class="bot-item-screenshot">
+                    <img src="assets/python_art.png" alt="Пример проекта из канала Python Git" loading="lazy">
+                </div>
+                <div class="bot-item-description">
+                    <h2>📜 Python Git</h2>
+                    <p>Small Python projects with code explanations — an evolving collection for learning and inspiration.</p>
+					<a href="https://t.me/python_Git" target="_blank" rel="noopener" aria-label="Go to channel Python Git">👉 Go to channel</a>
+                </div>
+            </article>
 
-			<div class="bot-item">
-					<div class="bot-item-screenshot">
-						<img src="assets/roblox_art.png" alt="Скриншот roblox_art">
-					</div>
-					<div class="bot-item-description">
-						<h2>📜Roblox Git</h2>					
-					   <p>Here you’ll find the best Lua scripts for Roblox! Enhance your game, create new possibilities, and surprise your friends. Subscribe and stay updated with fresh content!</p>
+            <article class="bot-item" id="bot4">
+                <div class="bot-item-screenshot">
+                    <img src="assets/roblox_art.png" alt="Пример скриптов из канала Roblox Git" loading="lazy">
+                </div>
+                <div class="bot-item-description">
+                    <h2>📜 Roblox Git</h2>
+                    <p>Here you’ll find the best Lua scripts for Roblox! Enhance your game, create new possibilities, and surprise your friends. Subscribe and stay updated with fresh content!</p>
 						<a href="https://t.me/+f6UreQx9mYI5NGMy" target="_blank">👉 Go to channel</a>
-					</div>
-			</div>
-
-
-
-			    <img src="assets/896.gif" alt="Анимация" class="bot-animation">
+			   </div>
+            </article>
         </div>
     </div>
-	
-    <script src="script.js"></script>
-    <script>
-        function changeLanguage() {
-            var selectedLanguage = document.getElementById("language").value;
-            window.location.href = selectedLanguage;
-        }
-    </script>
+
+        <script src="script.js" defer></script>
 </body>
 </html>
