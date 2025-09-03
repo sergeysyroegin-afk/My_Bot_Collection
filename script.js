@@ -76,7 +76,7 @@ function initAvatarAnimation() {
   });
 }
 
-// === 4. Открытие ссылок в Telegram ===
+// === 4. Открытие ссылок: в Telegram, если возможно, иначе — в браузере ===
 function initTgLinks() {
   document.querySelectorAll('.tg-link').forEach(link => {
     link.addEventListener('click', (e) => {
@@ -84,10 +84,10 @@ function initTgLinks() {
       const url = link.getAttribute('data-url');
 
       if (window.Telegram?.WebApp) {
-        // Открываем в Telegram
-        Telegram.WebApp.postEvent('web_app_open_tg_link', { url: url });
+        // Если в Telegram — открываем внутри приложения
+        Telegram.WebApp.openTelegramLink(url);
       } else {
-        // Для тестирования в браузере
+        // Если в браузере — открываем в новой вкладке
         window.open(url, '_blank');
       }
     });
