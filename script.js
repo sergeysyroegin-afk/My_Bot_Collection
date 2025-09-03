@@ -1,118 +1,144 @@
-window.onload = function() {
-  Telegram.WebApp.ready();
-  //console.log(Telegram.WebApp.initDataUnsafe);  // Для отладки
-  //console.log(Telegram.WebApp.version);
-};
-// script.js
-
 /**
- * Автоматическое определение языка при первом заходе
+ * script.js — Портфолио Сергея Вельского
+ * Telegram Mini App: тема, язык, приветствие, открытие каналов
  */
-function detectLanguage() {
-  const savedLang = localStorage.getItem('preferredLanguage');
-  if (savedLang) {
-    // Если язык уже выбирался — ничего не делаем
-    return;
+
+// === 1. Приветствие по имени ===
+function initWelcome() {
+  const welcomeEl = document.getElementById('welcome');
+  let firstName = 'Пользователь';
+
+  if (window.Telegram?.WebApp?.initDataUnsafe?.user) {
+    firstName = Telegram.WebApp.initDataUnsafe.user.first_name;
   }
 
-  const userLang = navigator.language.toLowerCase();
-  const russianLangs = ['ru', 'be', 'uk'];
-
-  // Если язык — русский, белорусский или украинский — оставаться на русской версии
-  if (russianLangs.some(lang => userLang.startsWith(lang))) {
-    // Текущая страница — уже русская
-  } else {
-    // Перейти на английскую версию
-    if (!window.location.href.includes('index_en.html')) {
-      localStorage.setItem('preferredLanguage', 'en');
-      window.location.replace('index_en.html');
-    }
-  }
+  welcomeEl.textContent = `Добро пожаловать, ${firstName}!`;
 }
 
-/**
- * Инициализация переключателя языка
- */
-function initLanguageSelector() {
-  const languageSelect = document.getElementById('language');
-  if (!languageSelect) return;
-
-  // Устанавливаем выбранный язык в селекте
-  languageSelect.value = window.location.pathname.endsWith('index_en.html') ? 'index_en.html' : 'index.html';
-
-  // Обработчик изменения
-  languageSelect.addEventListener('change', function () {
-    const selected = this.value;
-    localStorage.setItem('preferredLanguage', selected.includes('en') ? 'en' : 'ru');
-    window.location.href = selected;
-  });
-}
-
-/**
- * Инициализация переключателя темы
- */
+// === 2. Переключатель темы с иконками и haptics ===
 function initThemeToggle() {
-  const themeToggleBtn = document.getElementById('theme-toggle');
-  if (!themeToggleBtn) return;
-
+  const btn = document.getElementById('theme-toggle');
+  const icon = document.getElementById('theme-icon');
   const body = document.body;
+
   const savedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  // Устанавливаем тему
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
     body.classList.add('dark-theme');
-    themeToggleBtn.textContent = 'Светлая тема';
+    icon.textContent = '🌙';
   } else {
-    themeToggleBtn.textContent = 'Тёмная тема';
+    icon.textContent = '☀️';
   }
 
-  // Переключение темы
-  themeToggleBtn.addEventListener('click', () => {
+  btn.addEventListener('click', () => {
+    icon.style.transition = 'transform 0.3s ease';
+    icon.style.transform = 'rotate(360deg)';
+    setTimeout(() => icon.style.transform = 'rotate(0deg)', 300);
+
+    if (window.Telegram?.WebApp?.HapticFeedback) {
+      Telegram.WebApp.HapticFeedback.impactOccurred('light');
+    }
+
     if (body.classList.contains('dark-theme')) {
       body.classList.remove('dark-theme');
-      themeToggleBtn.textContent = 'Тёмная тема';
+      icon.textContent = '☀️';
       localStorage.setItem('theme', 'light');
     } else {
       body.classList.add('dark-theme');
-      themeToggleBtn.textContent = 'Светлая тема';
+      icon.textContent = '🌙';
       localStorage.setItem('theme', 'dark');
     }
   });
 }
 
-/**
- * Инициализация анимаций появления при прокрутке
- */
-function initAnimations() {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px',
+// === 3. Анимация аватара ===
+function initAvatarAnimation() {
+  const avatar = document.getElementById('avatar');
+  if (!avatar) return;
+
+  let isAnimated = false;
+
+  avatar.addEventListener('click', () => {
+    if (window.Telegram?.WebApp?.HapticFeedback) {
+      Telegram.WebApp.HapticFeedback.impactOccurred('medium');
     }
-  );
 
-  const profile = document.getElementById('profile');
-  const botItems = document.querySelectorAll('.bot-item');
-
-  if (profile) observer.observe(profile);
-  botItems.forEach((item) => observer.observe(item));
+    if (!isAnimated) {
+      avatar.classList.remove('normal');
+      avatar.classList.add('animate');
+      console.log('🎉 Привет! Это Сергей. Спасибо, что доскроллил до конца!');
+    } else {
+      avatar.classList.remove('animate');
+      avatar.classList.add('normal');
+    }
+    isAnimated = !isAnimated;
+  });
 }
 
-/**
- * Запуск всех функций при загрузке страницы
- */
+// === 4. Открытие ссылок в Telegram ===
+function initTgLinks() {
+  document.querySelectorAll('.tg-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = link.getAttribute('data-url');
+
+      if (window.Telegram?.WebApp) {
+        // Открываем в Telegram
+        Telegram.WebApp.postEvent('web_app_open_tg_link', { url: url });
+      } else {
+        // Для тестирования в браузере
+        window.open(url, '_blank');
+      }
+    });
+  });
+}
+
+// === 5. Анимации появления ===
+function initAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.bot-item').forEach(item => observer.observe(item));
+  const profile = document.getElementById('profile');
+  if (profile) observer.observe(profile);
+}
+
+// === 6. Язык ===
+function initLanguageSelector() {
+  const select = document.getElementById('language');
+  if (!select) return;
+
+  select.value = window.location.pathname.endsWith('index_en.html') ? 'index_en.html' : 'index.html';
+
+  select.addEventListener('change', () => {
+    const selected = select.value;
+    localStorage.setItem('preferredLanguage', selected.includes('en') ? 'en' : 'ru');
+    window.location.href = selected;
+  });
+}
+
+// === 7. Telegram WebApp ===
+function initTelegram() {
+  if (window.Telegram?.WebApp) {
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand();
+  }
+}
+
+// === Запуск ===
 document.addEventListener('DOMContentLoaded', () => {
-  detectLanguage();
-  initLanguageSelector();
+  initTelegram();
+  initWelcome();
   initThemeToggle();
+  initAvatarAnimation();
+  initTgLinks();
   initAnimations();
+  initLanguageSelector();
 });
