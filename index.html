@@ -11,19 +11,23 @@
 <body class="light-theme">
     <div class="container">
 
-        <!-- Панель настроек -->
-        <div class="settings-panel">
-            <div class="language-select">
-                <label for="language">🌍</label>
-                <select id="language" aria-label="Выберите язык">
-                    <option value="index.html" selected>Ру</option>
-                    <option value="index_en.html">En</option>
-                </select>
-            </div>
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Переключить тему">
-                <span id="theme-icon">☀️</span>
-            </button>
-        </div>
+		<!-- Панель темы — слева вверху -->
+		<div class="theme-panel">
+		  <button id="theme-toggle" class="theme-toggle-btn" aria-label="Переключить тему">
+			<span id="theme-icon">☀️</span>
+		  </button>
+		</div>
+
+		<!-- Панель языка — справа вверху -->
+		<div class="language-panel">
+		  <div class="language-select">
+			<label for="language">🌍</label>
+			<select id="language" aria-label="Выберите язык">
+			  <option value="index.html" selected>Ру</option>
+			  <option value="index_en.html">En</option>
+			</select>
+		  </div>
+		</div>
 
         <!-- Профиль -->
         <div class="profile-wrapper" id="profile">
